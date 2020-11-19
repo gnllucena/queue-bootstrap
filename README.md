@@ -17,7 +17,7 @@ You can run the application through Visual Studio or from command line (On the A
 
 	dotnet run
 
-# Some philosophies on this software
+## Some philosophies on this software
 This is by no means the right way to code, it's just a way that I found easier to code on my daily bases:
 
 ### Logs
@@ -55,7 +55,7 @@ Just don't.
 ### Logs, yeah, again.
 Really, log everything, when your application crashes, they'll be your best friend.
 
-# Some cool things I think you should know
+## Some cool things I think you should know
 * Every HTTP response has a [X-Request-ID](https://devcenter.heroku.com/articles/http-request-id) header and every log (to Console or AWS CloudWatch) has this value embedded so the developer team can trace the request lifecycle.
 	* Response Header - [LoggingMiddleware.cs](https://github.com/gnllucena/api-bootstrap/blob/master/src/api/Middlewares/LoggingMiddleware.cs) - line 21
 	* Embedded value on logs - [LoggingMiddleware.cs](https://github.com/gnllucena/api-bootstrap/blob/master/src/api/Middlewares/LoggingMiddleware.cs) - line 23
