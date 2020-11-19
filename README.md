@@ -21,39 +21,39 @@ You can run the application through Visual Studio or from command line (On the A
 This is by no means the right way to code, it's just a way that I found easier to code on my daily bases:
 
 ### Logs
-	Log everywhere and everything you can, mind your log level (you don't want to crash your log server). If you're writing software that does many differents thing accordingly of the input, be clear in your logs when your software does and doesn't do something. Always put a identifier on every log so you can trace to the affected entity you're working on.
+Log everywhere and everything you can, mind your log level (you don't want to crash your log server). If you're writing software that does many differents thing accordingly of the input, be clear in your logs when your software does and doesn't do something. Always put a identifier on every log so you can trace to the affected entity you're working on.
 
 ### Cache
-	Cache is cool, use it, but don't reinvent the wheel. You don't want to solve a distributed cache problem, when Redis, for example, already solved.
+Cache is cool, use it, but don't reinvent the wheel. You don't want to solve a distributed cache problem, when Redis, for example, already solved.
 
 ### Publishing on message queues
-	If you're using RabbitMQ, don't publish on a queue, that's what exchanges are for (mostly).
+If you're using RabbitMQ, don't publish on a queue, that's what exchanges are for (mostly).
 
 ### Interfaces
-	Hey, ever use [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control)? I didn't, I just use my interfaces for unit testing, if you won't use IoC, keep your interfaces and classes together, it's easier to maintain and expand.
+Hey, ever use [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control)? I didn't, I just use my interfaces for unit testing, if you won't use IoC, keep your interfaces and classes together, it's easier to maintain and expand.
 
 ### Exceptions
-	In this application there is a [Exception Handling Middleware](https://github.com/gnllucena/api-bootstrap/blob/master/src/api/Middlewares/ExceptionHandlingMiddleware.cs), so every thrown exception will be catched on it and the corresponding status code will be sent to the client. Don't like to use exceptions? Well, there is 57 different exception classes on dotnet, maybe you should use them more often.
+In this application there is a [Exception Handling Middleware](https://github.com/gnllucena/api-bootstrap/blob/master/src/api/Middlewares/ExceptionHandlingMiddleware.cs), so every thrown exception will be catched on it and the corresponding status code will be sent to the client. Don't like to use exceptions? Well, there is 57 different exception classes on dotnet, maybe you should use them more often.
 
 ### Controllers
-	They serialize requests and send responses, that's all.
+They serialize requests and send responses, that's all.
 
 ### Services
-	Get everything your entity needs, validate it through FluentValidation and ValidationService, send it to it's repository (or cache, or message broker)
+Get everything your entity needs, validate it through FluentValidation and ValidationService, send it to it's repository (or cache, or message broker)
 
-	Input, processing, output.
+Input, processing, output.
 
 ### Validations 
-	Assyncronous validations should use [ValidationService.cs](https://github.com/gnllucena/api-bootstrap/blob/master/src/Common/Services/ValidationService.cs), syncronous validation should use fluentvalidation 
+Assyncronous validations should use [ValidationService.cs](https://github.com/gnllucena/api-bootstrap/blob/master/src/Common/Services/ValidationService.cs), syncronous validation should use fluentvalidation 
 
 ### Repositories
-	They run queries, what's more for repositories?
+They run queries, what's more for repositories?
 
 ### Many Class Libraries
-	Just don't.
+Just don't.
 
 ### Logs, yeah, again.
-	Really, log everything, when your application crashes, they'll be your best friend.
+Really, log everything, when your application crashes, they'll be your best friend.
 
 # Some cool things I think you should know
 * Every HTTP response has a [X-Request-ID](https://devcenter.heroku.com/articles/http-request-id) header and every log (to Console or AWS CloudWatch) has this value embedded so the developer team can trace the request lifecycle.
