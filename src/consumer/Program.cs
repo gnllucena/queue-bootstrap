@@ -47,7 +47,7 @@ namespace Consumer
             var group = "AnotherContext";
             var application = "Consumer.AnotherContext.NewUserEvent";
 
-#if (DEBUG)
+#if (!DEBUG)
             var client = Configuration.GetAWSOptions().CreateServiceClient<IAmazonCloudWatchLogs>();
 
             var options = new CloudWatchSinkOptions
@@ -70,7 +70,7 @@ namespace Consumer
                 .WriteTo.Console(
                     outputTemplate: "{NewLine}[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Scope} {Message}{NewLine}{Exception}"
                 )
-#if (DEBUG)
+#if (!DEBUG)
                 .WriteTo.AmazonCloudWatch(options, client)
 #endif
                 .CreateLogger();
