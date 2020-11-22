@@ -45,8 +45,6 @@ namespace Consumer
 
             var users = await _cacheService.GetListAsync<User>("PAGINATEDUSERS");
 
-            throw new Exception("asdfasdfasdfasdfasd");
-
             if (message.Id == user.Id && users.Any())
             {
                 var userExistsOnCacheEvent = new UserExistsOnCacheEvent()
