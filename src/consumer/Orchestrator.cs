@@ -1,11 +1,13 @@
-﻿using Common.Domain.Models.Events;
-using Common.Factories;
+﻿using Common.Domain.Entities;
+using Common.Domain.Models.Events;
 using Common.Models.Options;
 using Common.Repositories;
 using Common.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Consumer
@@ -39,7 +41,21 @@ namespace Consumer
 
         public async Task OrchestrateAsync(NewUserEvent message)
         {
-            await Task.Delay(1000);
+            var user = await _cacheService.GetSingleAsync<User>("NEWUSER");
+
+            var users = await _cacheService.GetListAsync<User>("PAGINATEDUSERS");
+
+            throw new Exception("asdfasdfasdfasdfasd");
+
+            if (message.Id == user.Id && users.Any())
+            {
+                var userExistsOnCacheEvent = new UserExistsOnCacheEvent()
+                {
+                    Id = message.Id
+                };
+
+                _messagingService.Queue(_messaging.Publishing.Exchange.Name, _messaging.Publishing.Routingkey, userExistsOnCacheEvent);
+            }
         }
     }
 }

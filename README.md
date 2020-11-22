@@ -34,10 +34,7 @@ If you're using RabbitMQ, don't publish on a queue, that's what exchanges are fo
 Hey, ever use [Inversion of Control](https://en.wikipedia.org/wiki/Inversion_of_control)? I didn't, I just use my interfaces for unit testing, if you won't use IoC, keep your interfaces and classes together, it's easier to maintain and expand.
 
 ### Exceptions
-In this application there is a [Exception Handling Middleware](https://github.com/gnllucena/api-bootstrap/blob/master/src/api/Middlewares/ExceptionHandlingMiddleware.cs), so every thrown exception will be catched on it and the corresponding status code will be sent to the client. Don't like to use exceptions? Well, there is 57 different exception classes on dotnet, maybe you should use them more often.
-
-### Controllers
-They serialize requests and send responses, that's all.
+RabbitMQ is well able to treat exceptions, so everytime an Exception occurs, so every thrown exception shouldn't be catched, just let RabbitMQ deadletters and errors messages do their work.
 
 ### Services
 Get everything your entity needs, validate it through FluentValidation and ValidationService, send it to it's repository (or cache, or message broker)
@@ -57,10 +54,6 @@ Just don't.
 Really, log everything, when your application crashes, they'll be your best friend.
 
 ## Some cool things I think you should know
-* Every HTTP response has a [X-Request-ID](https://devcenter.heroku.com/articles/http-request-id) header and every log (to Console or AWS CloudWatch) has this value embedded so the developer team can trace the request lifecycle.
-	* Response Header - [LoggingMiddleware.cs](https://github.com/gnllucena/api-bootstrap/blob/master/src/api/Middlewares/LoggingMiddleware.cs) - line 21
-	* Embedded value on logs - [LoggingMiddleware.cs](https://github.com/gnllucena/api-bootstrap/blob/master/src/api/Middlewares/LoggingMiddleware.cs) - line 23
-
 * When a RabbitMQ connection is opened, the client tries to connect to, or create, a new set of [exchanges and queues](https://www.rabbitmq.com/tutorials/amqp-concepts.html). Every queue will be created with a deadletter, so when a message cannot be fully proccessed it will be sent to a different queue to be processed afterwards, and in case this behavior happens a few times, the message goes to an error queue (with original queue name and exception value), where the developer team should analyze it and see what is going on, all this behavior is based on appsettings values.
 	* Exchanges and queues configuration - [MessagingFactory.cs](https://github.com/gnllucena/api-bootstrap/blob/master/src/Common/Factories/MessagingFactory.cs) - lines 58 to 62
 
