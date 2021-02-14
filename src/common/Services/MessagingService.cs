@@ -19,16 +19,16 @@ namespace Common.Services
         void Queue(string exchange, string routingKey, object message, Dictionary<string, object> headers = null);
     }
 
-    public class MessagingService : IMessagingService
+    public class RabbitMQService : IMessagingService
     {
         private readonly IMessagingFactory _messagingFactory;
         private readonly Messaging _messaging;
-        private readonly ILogger<MessagingService> _logger;
+        private readonly ILogger<RabbitMQService> _logger;
 
-        public MessagingService(
+        public RabbitMQService(
             IMessagingFactory messagingFactory,
             IOptions<Messaging> messaging,
-            ILogger<MessagingService> logger)
+            ILogger<RabbitMQService> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _messagingFactory = messagingFactory ?? throw new ArgumentNullException(nameof(messagingFactory));
@@ -139,6 +139,23 @@ namespace Common.Services
             }
 
             return ++count;
+        }
+    }
+
+    public class SQSService : IMessagingService
+    {
+        public SQSService()
+        {
+        }
+
+        public AsyncEventHandler<BasicDeliverEventArgs> Dequeue<T>(CancellationToken cancellationToken, Func<string, T, Task> callback)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Queue(string exchange, string routingKey, object message, Dictionary<string, object> headers = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

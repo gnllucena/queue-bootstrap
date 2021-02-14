@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 
@@ -14,17 +13,17 @@ namespace Common.Factories
         void Disconnect();
     }
 
-    public class MessagingFactory : IMessagingFactory
+    public class RabbitMQFactory : IMessagingFactory
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly Messaging _messaging;
         private IModel _channel;
         private IConnection _connection;
-        private readonly ILogger<MessagingFactory> _logger;
+        private readonly ILogger<RabbitMQFactory> _logger;
 
-        public MessagingFactory(
+        public RabbitMQFactory(
             IOptions<Messaging> messaging,
-            ILogger<MessagingFactory> logger)
+            ILogger<RabbitMQFactory> logger)
         {
             _messaging = messaging.Value ?? throw new ArgumentNullException(nameof(messaging));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -54,23 +53,6 @@ namespace Common.Factories
 
             _logger.LogInformation("RABBITMQ | CREATING MODEL");
             _channel = _connection.CreateModel();
-
-            //long prefetch-size
-            // The client can request that messages be sent in advance so that 
-            // when the client finishes processing a message, the following message is already held locally, 
-            // rather than needing to be sent down the channel.Prefetching gives a performance improvement.
-            // This field specifies the prefetch window size in octets.
-            // The server will send a message in advance if it is equal to or smaller in size than the available 
-            // prefetch size(and also falls into other prefetch limits). May be set to zero, meaning "no specific limit", 
-            // although other prefetch limits may still apply.The prefetch-size is ignored if the no - ack option is set.
-
-            //short prefetch-count
-            // Specifies a prefetch window in terms of whole messages. 
-            // This field may be used in combination with the prefetch-size field; 
-            // a message will only be sent in advance if both prefetch windows 
-            // (and those at the channel and connection level) allow it. 
-            // The prefetch-count is ignored if the no-ack option is set.
-            _channel.BasicQos(10, 10, true);
 
             CreateErrorStack();
 

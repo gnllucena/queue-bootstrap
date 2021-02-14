@@ -18,13 +18,13 @@ namespace Common.Services
         Task SetExpirationAsync(string key, DateTime expiration);
     }
 
-    public class CacheService : ICacheService
+    public class RedisService : ICacheService
     {
-        private readonly ILogger<CacheService> _logger;
+        private readonly ILogger<RedisService> _logger;
         private readonly ICacheFactory _cacheFactory;
 
-        public CacheService(
-            ILogger<CacheService> logger,
+        public RedisService(
+            ILogger<RedisService> logger,
             ICacheFactory cacheFactory)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

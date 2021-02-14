@@ -20,28 +20,24 @@ namespace Consumer
         private CancellationTokenSource _cancellationTokenSource;
         private readonly Messaging _messaging;
         private readonly IMessagingService _messagingService;
-        private readonly ICacheFactory _cacheFactory;
         private readonly IMessagingFactory _messagingFactory;
-        private readonly IDatabaseFactory _databaseFactory;
-        private readonly IOrchestrator _orchestrator;
+        private readonly IOrchestratorService _orchestratorService;
         private readonly ILogger<Host> _logger;
 
         public Host(
             ICacheFactory cacheFactory,
             IMessagingFactory messagingFactory,
             IDatabaseFactory databaseFactory,
-            IOrchestrator orchestrator,
+            IOrchestratorService orchestratorService,
             IMessagingService messagingService,
             IOptions<Messaging> messaging,
             ILogger<Host> logger)
         {
-            _cacheFactory = cacheFactory ?? throw new ArgumentNullException(nameof(cacheFactory));
             _messaging = messaging.Value ?? throw new ArgumentNullException(nameof(messaging));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
+            _orchestratorService = orchestratorService ?? throw new ArgumentNullException(nameof(orchestratorService));
             _messagingService = messagingService ?? throw new ArgumentNullException(nameof(messagingService));
             _messagingFactory = messagingFactory ?? throw new ArgumentNullException(nameof(messagingFactory));
-            _databaseFactory = databaseFactory ?? throw new ArgumentNullException(nameof(databaseFactory));
         }
 
         public override Task StartAsync(CancellationToken cancellationToken)
@@ -89,35 +85,7 @@ namespace Consumer
                     return;
                 }
 
-                using (_logger.BeginScope(Guid.NewGuid().ToString()))
-                {
-                    try
-                    {
-                        await _cacheFactory.ConnectAsync();
-
-                        await _databaseFactory.OpenConnectionAsync();
-
-                        _databaseFactory.BeginTransaction();
-
-                        await _orchestrator.OrchestrateAsync(message);
-
-                        _databaseFactory.CommitTransaction();
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogCritical($"HOST | CRITICAL ERROR: {ex}");
-
-                        _databaseFactory.RollbackTransaction();
-
-                        throw;
-                    }
-                    finally
-                    {
-                        await _cacheFactory.DisconnectAsync();
-
-                        _databaseFactory.CloseConnection();
-                    }
-                }
+                await _orchestratorService.OrchestrateAsync(message);
             });
 
             _tag = channel.BasicConsume(_messaging.Consuming.Queue, false, consumer);

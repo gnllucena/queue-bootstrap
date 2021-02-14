@@ -15,16 +15,16 @@ namespace Common.Factories
         IDatabase Database();
     }
 
-    public class CacheFactory : ICacheFactory
+    public class RedisFactory : ICacheFactory
     {
         private IDatabase _database;
         private IConnectionMultiplexer _connectionMultiplexer;
         private readonly Cache _cache;
-        private readonly ILogger<CacheFactory> _logger;
+        private readonly ILogger<RedisFactory> _logger;
         
-        public CacheFactory(
+        public RedisFactory(
             IOptions<Cache> cache,
-            ILogger<CacheFactory> logger)
+            ILogger<RedisFactory> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _cache = cache.Value ?? throw new ArgumentNullException(nameof(cache));
