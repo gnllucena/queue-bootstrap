@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "tests\Tests.csproj", "{8A137556-42E1-4A49-B348-B6DB56BEE2FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consumer", "consumer\Consumer.csproj", "{92C34D15-8930-42F8-82F9-5972F00351C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hosted", "hosted\Hosted.csproj", "{92C34D15-8930-42F8-82F9-5972F00351C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lambda", "lambda\Lambda.csproj", "{103C2967-CB8A-45FA-A8A8-C754E65C2256}"
 EndProject

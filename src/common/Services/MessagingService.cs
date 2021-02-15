@@ -53,13 +53,13 @@ namespace Common.Services
                 var raw = Encoding.UTF8.GetString(ea.Body.Span);
                 var retries = 0;
 
-                _logger.LogDebug("MESSAGING | RAW MESSAGE: { raw }");
+                _logger.LogDebug($"MESSAGING | RAW MESSAGE: {raw}");
 
                 try
                 {
                     retries = Retries(ea);
 
-                    _logger.LogDebug("MESSAGING | THIS MESSAGE HAS BEEN PROCESSED { retries } TIMES");
+                    _logger.LogDebug($"MESSAGING | THIS MESSAGE HAS BEEN PROCESSED {retries} TIMES");
 
                     var message = JsonConvert.DeserializeObject<T>(raw);
 

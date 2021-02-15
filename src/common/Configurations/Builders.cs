@@ -33,6 +33,7 @@ namespace Common.Configurations
             .ConfigureAppConfiguration((context, configuration) =>
             {
                 configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                configuration.AddEnvironmentVariables();
             })
             .ConfigureServices((context, services) =>
             {
@@ -98,7 +99,7 @@ namespace Common.Configurations
                 BatchSizeLimit = 100,
                 QueueSizeLimit = 10000,
                 RetryAttempts = 3,
-                LogGroupRetentionPolicy = LogGroupRetentionPolicy.FiveDays,
+                LogGroupRetentionPolicy = LogGroupRetentionPolicy.ThreeDays,
                 TextFormatter = new JsonFormatter(),
                 MinimumLogEventLevel = LogEventLevel.Information
             };

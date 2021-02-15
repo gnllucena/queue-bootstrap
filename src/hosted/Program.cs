@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Threading.Tasks;
 
-namespace Consumer
+namespace Hosted
 {
     public class Program
     {

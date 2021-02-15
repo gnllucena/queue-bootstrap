@@ -32,7 +32,7 @@ namespace Common.Factories
 
         public async Task ConnectAsync()
         {
-            var connectionString = $"{string.Join(",", _cache.Addresses.Select(address => $"{address}:{_cache.Port}"))},password={_cache.Password}";
+            var connectionString = $"{_cache.Host}:{_cache.Port},password={_cache.Password}";
 
             _connectionMultiplexer = await ConnectionMultiplexer.ConnectAsync(connectionString);
 

@@ -37,7 +37,7 @@ namespace Common.Factories
                 VirtualHost = _messaging.VirtualHost,
                 DispatchConsumersAsync = true,
                 AutomaticRecoveryEnabled = true,
-                RequestedHeartbeat = new TimeSpan(10000)
+                RequestedHeartbeat = TimeSpan.FromSeconds(10)
             };
         }
 
