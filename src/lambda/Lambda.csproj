@@ -11,14 +11,15 @@
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.1.0" />
     <PackageReference Include="Amazon.Lambda.SQSEvents" Version="1.2.0" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.101" />
+    <PackageReference Include="AWSSDK.SQS" Version="3.5.1.19" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
-    <PackageReference Include="Serilog.Extensions.Hosting" Version="3.1.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="4.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.AwsCloudWatch" Version="4.0.161" />
+    <PackageReference Include="Serilog.Sinks.AwsCloudWatch" Version="4.0.168" />
   </ItemGroup>
 
   <ItemGroup>

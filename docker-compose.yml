@@ -1,18 +1,5 @@
 version: '3'
 services:
-  hosted: 
-    container_name: hosted
-    build:
-      context: ./
-      dockerfile: ./docker/hosted.Dockerfile
-    env_file:
-      - ./.env
-    restart: on-failure
-    depends_on:
-      - rabbitmq
-    links:
-        - rabbitmq
-
   rabbitmq:
     container_name: rabbitmq
     build: ./tools/rabbitmq/

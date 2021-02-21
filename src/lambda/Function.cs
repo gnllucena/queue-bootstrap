@@ -9,11 +9,12 @@ using Newtonsoft.Json;
 using Serilog;
 using System.Threading.Tasks;
 
-namespace Function
+[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
+namespace Lambda
 {
     public class Function
     {
-        public async Task FunctionHandler(SQSEvent evnt, ILambdaContext context)
+        public async Task Handler(SQSEvent evnt, ILambdaContext context)
         {
             Log.Logger = Builders.Log();
 
